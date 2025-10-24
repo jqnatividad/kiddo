@@ -2,8 +2,7 @@
 #[macro_export]
 macro_rules! generate_nearest_n {
     ($comments:tt) => {
-    doc_comment! {
-    concat!$comments,
+    #[doc = concat!$comments]
     #[inline]
     pub fn nearest_n<D>(&self, query: &[A; K], qty: usize) -> Vec<NearestNeighbour<A, T>>
     where
@@ -117,4 +116,5 @@ macro_rules! generate_nearest_n {
     fn dist_belongs_in_heap(dist: A, heap: &BinaryHeap<NearestNeighbour<A, T>>) -> bool {
         heap.is_empty() || dist < heap.peek().unwrap().distance || heap.len() < heap.capacity()
     }
-}}}
+    };
+}

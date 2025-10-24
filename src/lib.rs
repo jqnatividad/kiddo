@@ -83,8 +83,6 @@
 //!
 //! **NOTE**: Support for rkyv 0.7 is now deprecated and will be removed in Kiddo v6.
 
-#[macro_use]
-extern crate doc_comment;
 extern crate core;
 
 #[doc(hidden)]

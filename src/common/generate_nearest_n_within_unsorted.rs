@@ -2,9 +2,7 @@
 #[macro_export]
 macro_rules! generate_nearest_n_within_unsorted {
     ($comments:tt) => {
-        doc_comment! {
-            concat!$comments,
-
+            #[doc = concat!$comments]
             #[inline]
             pub fn nearest_n_within<D>(&self, query: &[A; K], dist: A, max_items: std::num::NonZero<usize>, sorted: bool) -> Vec<NearestNeighbour<A, T>>
             where
@@ -130,6 +128,5 @@ macro_rules! generate_nearest_n_within_unsorted {
                         });
                 }
             }
-        }
     };
 }

@@ -2,8 +2,7 @@
 #[macro_export]
 macro_rules! generate_best_n_within {
     ($leafnode:ident, $comments:tt) => {
-    doc_comment! {
-    concat!$comments,
+    #[doc = concat!$comments]
     #[inline]
     pub fn best_n_within<D>(
         &self,
@@ -147,4 +146,5 @@ macro_rules! generate_best_n_within {
             }
         }
     }
-}}}
+    };
+}

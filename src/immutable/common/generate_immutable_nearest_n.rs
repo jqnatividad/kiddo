@@ -2,8 +2,7 @@
 #[macro_export]
 macro_rules! generate_immutable_nearest_n {
     ($comments:tt) => {
-        doc_comment! {
-            concat!$comments,
+            #[doc = concat!$comments]
             #[inline]
             pub fn nearest_n<D>(&self, query: &[A; K], max_qty: NonZero<usize>) -> Vec<NearestNeighbour<A, T>>
             where
@@ -13,6 +12,5 @@ macro_rules! generate_immutable_nearest_n {
             {
                 self.nearest_n_within::<D>(query, A::infinity(), max_qty, true)
             }
-        }
     };
 }
