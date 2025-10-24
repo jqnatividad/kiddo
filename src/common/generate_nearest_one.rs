@@ -2,8 +2,7 @@
 #[macro_export]
 macro_rules! generate_nearest_one {
     ($leafnode:ident, $comments:tt) => {
-        doc_comment! {
-            concat!$comments,
+            #[doc = concat!$comments]
             #[inline]
             pub fn nearest_one<D>(&self, query: &[A; K]) -> NearestNeighbour<A, T>
                 where
@@ -146,6 +145,5 @@ macro_rules! generate_nearest_one {
                         }
                     });
             }
-        }
     };
 }
