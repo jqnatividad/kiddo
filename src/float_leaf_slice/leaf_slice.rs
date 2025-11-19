@@ -243,7 +243,7 @@ where
             if distance < radius {
                 results.add(NearestNeighbour {
                     distance,
-                    item: *unsafe { self.content_items.get_unchecked(idx) },
+                    item: remainder_items[idx],
                 });
             }
         }
@@ -275,7 +275,7 @@ where
             });
 
             if distance < radius {
-                let item = *unsafe { remainder_items.get_unchecked(idx) };
+                let item = remainder_items[idx];
                 if results.len() < max_qty {
                     results.push(BestNeighbour { distance, item });
                 } else {
