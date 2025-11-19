@@ -466,7 +466,7 @@ where
 
 #[cfg(test)]
 mod test {
-    use crate::float_leaf_slice::leaf_slice::{LeafFixedSlice, LeafSliceFloat};
+    use crate::float_leaf_slice::leaf_slice::{LeafFixedSlice, LeafSlice, LeafSliceFloat};
     use crate::{BestNeighbour, NearestNeighbour, SquaredEuclidean};
     use std::collections::BinaryHeap;
 
@@ -623,5 +623,33 @@ mod test {
                 },
             ]
         );
+    }
+
+    // Test for remainder path processing with non-chunk-aligned sizes (CHUNK_SIZE=32)
+    // Verifies the fix for using remainder_items[idx] instead of self.content_items[idx]
+    #[test]
+    fn test_remainder_processing_finds_correct_item() {
+        // Size 33 = 1 chunk (32) + 1 remainder
+        // Item 32 is in the remainder region - if the bug existed, it would return
+        // self.content_items[0] instead of remainder_items[0]
+        let mut dim0 = Vec::with_capacity(33);
+        let mut dim1 = Vec::with_capacity(33);
+        let mut items = Vec::with_capacity(33);
+        for i in 0..33 {
+            dim0.push(i as f64);
+            dim1.push(0.0f64);
+            items.push(i as u32);
+        }
+
+        let slice = LeafSlice {
+            content_points: [&dim0[..], &dim1[..]],
+            content_items: &items[..],
+        };
+
+        let mut results: BinaryHeap<NearestNeighbour<f64, u32>> = BinaryHeap::with_capacity(10);
+        slice.nearest_n_within::<SquaredEuclidean, _>(&[32.0f64, 0.0f64], 4.0f64, &mut results);
+
+        let items_found: Vec<_> = results.iter().map(|n| n.item).collect();
+        assert!(items_found.contains(&32u32), "Should find item 32 in remainder region");
     }
 }
