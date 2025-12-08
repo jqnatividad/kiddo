@@ -1,5 +1,54 @@
 # Kiddo Changelog
 
+## Unreleased
+
+I've kept back these changes for now as, whilst extremely welcome, the change to the return type of `size()` would be breaking.
+I'm hoping to have v6 available soon, which will include both these changes as well as addressing quite a few other long-running feature requests.
+
+### ✨ Features
+
+- Improve the flexibility of T type, KdTree.size. Add generate nearest_one_point (@pjkundert)
+- Fix broken test of custom struct as T. Add test for () as T (@pjkundert)
+
+## [5.2.2] - 2025-12-08
+
+### 🐛 Bug Fixes
+
+- Correct slice access in remainder processing and remove unsafe (@MarkusZoppelt)
+- Use `try_from()` with error for `leaf_items.len()` (@MarkusZoppelt)
+
+### ♻️ Refactor
+
+- within_unsorted_iter no longer uses a generator (@KvA2KLvAST)
+- Remove needless SubAssign trait bound from Content trait
+
+### Deps
+
+- Remove doc-comment dependency and use doc attribute that was added in Rust 1.54 instead (@jqnatividad)
+- Use `doc` attribute instead of `doc_comment!` (@jqnatividad)
+- Update actions/checkout action to v6
+- Update codspeedhq/action action to v4
+- Update ad-m/github-push-action action to v1
+- Update rust crate rstest to 0.26
+- Update rust crate codspeed-criterion-compat to v4
+ 
+### Ci
+
+- Update CI workflow triggers to include PR and workflow_dispatch
+- Permit coverage to run for PRs as well
+- Fix release-plz and add commitlint
+
+### 💄 Styling
+
+- Remove unnecessary parentheses
+- Fix formatting
+- Fix some lint issues
+
+### 🧪 Testing
+
+- Add regression test for remainder slice access bug, Signed-off-by:Markus Zoppelt <markus.zoppelt@helsing.ai>
+
+
 ## [5.2.1] - 2025-06-29
 
 ### 📝 Documentation
